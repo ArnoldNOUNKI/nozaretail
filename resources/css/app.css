@@ -1,0 +1,88 @@
+@import '@fontsource/gloock/400.css';
+@import '@fontsource-variable/instrument-sans/wdth.css';
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../../app/Livewire/**/*.php';
+
+/*
+ * Charte Noza Retail
+ * Noir et blanc du logo, gris minéral froid pour les surfaces,
+ * vert Sanaga pour les prix promo et les confirmations.
+ */
+@theme {
+    --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Gloock', 'Georgia', serif;
+
+    --color-ink: #000000;
+    --color-paper: #ffffff;
+    --color-mist: #efefed;
+    --color-mist-deep: #e2e2df;
+    --color-line: #dcdcd8;
+    --color-graphite: #57575a;
+    --color-sanaga: #0e5e46;
+    --color-sanaga-soft: #e3efe9;
+    --color-alert: #b42318;
+    --color-amber: #b45309;
+
+    --radius-btn: 4px;
+    --ease-out-quart: cubic-bezier(.25, 1, .5, 1);
+}
+
+@layer base {
+    html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+    body { @apply bg-paper text-ink font-sans antialiased; font-feature-settings: "ss01"; }
+    :focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+    ::selection { background: var(--color-ink); color: var(--color-paper); }
+    [x-cloak] { display: none !important; }
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    }
+}
+
+@utility wrap { @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-10; }
+@utility display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; line-height: 1.02; }
+@utility num { font-variant-numeric: tabular-nums; }
+
+@utility btn { @apply inline-flex items-center justify-center gap-2 h-12 px-6 text-[15px] font-medium rounded-[4px] transition-colors duration-150 select-none disabled:opacity-40 disabled:cursor-not-allowed; }
+@utility btn-ink { @apply btn bg-ink text-paper hover:bg-graphite; }
+@utility btn-paper { @apply btn bg-paper text-ink hover:bg-mist; }
+@utility btn-line { @apply btn border border-ink text-ink hover:bg-ink hover:text-paper; }
+@utility btn-sm { @apply h-10 px-4 text-sm; }
+
+@utility field { @apply block w-full h-12 rounded-[4px] border border-line bg-paper px-3.5 text-[15px] placeholder:text-graphite/60 focus:border-ink focus:outline-none transition-colors; }
+@utility label { @apply block text-sm font-medium mb-1.5; }
+@utility error { @apply mt-1.5 text-sm text-alert; }
+
+@utility chip { @apply inline-flex items-center h-9 px-3.5 rounded-full border border-line text-sm whitespace-nowrap transition-colors hover:border-ink; }
+@utility chip-on { @apply bg-ink text-paper border-ink; }
+@utility rule { @apply border-t border-line; }
+
+/* Lien souligné discret, propre au site */
+@utility ulink {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+    transition: background-size .2s var(--ease-out-quart);
+    &:hover { background-size: 0 1px; background-position: 100% 100%; }
+}
+
+@utility prose-noza {
+    @apply text-[15px] leading-7 text-graphite;
+    & p { @apply mb-4; }
+    & ul { @apply list-disc pl-5 mb-4 space-y-1; }
+    & ol { @apply list-decimal pl-5 mb-4 space-y-1; }
+    & h2, & h3 { @apply text-ink font-semibold mt-6 mb-2; }
+    & a { @apply text-ink underline; }
+}
+
+textarea.field { height: auto; padding-block: .75rem; }
+
+/* Moment d'entrée unique : le titre du hero se compose */
+@keyframes rise { from { transform: translateY(0.35em); opacity: 0; } to { transform: none; opacity: 1; } }
+.hero-line { display: block; animation: rise .7s var(--ease-out-quart) both; }
+.hero-line:nth-child(2) { animation-delay: .08s; }
+.hero-line:nth-child(3) { animation-delay: .16s; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
